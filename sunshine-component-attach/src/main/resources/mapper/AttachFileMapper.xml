@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sunshine.component.attach.mapper.AttachFileMapper">
+
+   <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+    ATTACH_ID, ATTACH_NAME, CONTENT_TYPE,   
+    FILE_SIZE,FILE_PATH, BIZ_ID,   
+    BIZ_TYPE,ITEM_CODE, UPLOAD_TYPE,   
+    THUMB_PATH,  DEL_REMARK,IS_REMARK,   
+    REMARK   
+    </sql>
+    
+    <sql id="Base_Insert_Column_List">
+		#{fileInfo.attachId},#{fileInfo.attachName}, #{fileInfo.contentType},
+		#{fileInfo.fileSize}, #{fileInfo.filePath},#{fileInfo.bizId},
+		#{fileInfo.bizType},#{fileInfo.itemCode},#{fileInfo.uploadType},
+		#{fileInfo.thumbPath},#{fileInfo.delRemark},#{fileInfo.isRemark},
+		#{fileInfo.remark}
+	</sql>
+    
+        <insert id="insertAttachFileInfo">
+       INSERT INTO ${tableName}(
+         <include refid="Base_Column_List"></include>
+       ) VALUES (
+         <include refid="Base_Insert_Column_List"></include>
+       )
+       
+    </insert>
+
+</mapper>
+
+

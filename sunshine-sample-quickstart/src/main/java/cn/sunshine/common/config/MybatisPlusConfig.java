@@ -1,0 +1,99 @@
+package cn.sunshine.common.config;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import com.baomidou.mybatisplus.autoconfigure.ConfigurationCustomizer;
+import com.baomidou.mybatisplus.core.parser.ISqlParser;
+import com.baomidou.mybatisplus.extension.MybatisMapWrapperFactory;
+import com.baomidou.mybatisplus.extension.parsers.BlockAttackSqlParser;
+import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.SqlExplainInterceptor;
+
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * @Description
+ * @date 2019年5月28日
+ * @author wuj
+ * @version V1.0
+ */
+@EnableTransactionManagement
+@Configuration
+@MapperScan(basePackages = { "cn.sunshine.**.mapper" })
+@Slf4j
+public class MybatisPlusConfig {
+
+	/**
+	 * 
+	 * @Title: paginationInterceptor
+	 * @Description:分页插件
+	 * @return
+	 *
+	 * @date 创建时间：2019年5月28日
+	 * @author 作者：wuj
+	 */
+	@Bean
+	public PaginationInterceptor paginationInterceptor() {
+		log.info("注册分页插件");
+		PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
+
+		List<ISqlParser> sqlParserList = new ArrayList<>();
+		// 攻击 SQL 阻断解析器、加入解析链
+		log.info("攻击 SQL 阻断解析器、加入解析链");
+		sqlParserList.add(new BlockAttackSqlParser());
+		paginationInterceptor.setSqlParserList(sqlParserList);
+
+		return paginationInterceptor;
+	}
+
+	
+//	@DependsOn("dataSource")
+//	@Bean(name = "transactionManager")
+//	public DataSourceTransactionManager transactionManager(
+//			@Qualifier(value = "dataSource") DruidDataSource dataSource) {
+//		log.info("配置事务管理");
+//		return new DataSourceTransactionManager(dataSource);
+//	}
+
+//	@Bean(name = "dataSource", initMethod = "init", destroyMethod = "close")
+//	@ConfigurationProperties("spring.datasource.druid")
+//	public DataSource dataSource() {
+//		return DruidDataSourceBuilder.create().build();
+//	}
+
+
+	@Bean
+	public SqlExplainInterceptor sqlExplainInterceptor() {
+		SqlExplainInterceptor sqlExplainInterceptor = new SqlExplainInterceptor();
+		List<ISqlParser> sqlParserList = new ArrayList<>();
+		sqlParserList.add(new BlockAttackSqlParser());
+		sqlExplainInterceptor.setSqlParserList(sqlParserList);
+		return sqlExplainInterceptor;
+	}
+
+	/**
+	 * 
+	 * @Title: mybatisConfigurationCustomizer
+	 * @Description:补充map驼峰转换
+	 * @return
+	 *
+	 * @date 创建时间：2019年3月29日
+	 * @author 作者：wuj
+	 */
+	@Bean
+	public ConfigurationCustomizer mybatisConfigurationCustomizer() {
+		return new ConfigurationCustomizer() {
+			@Override
+			public void customize(org.apache.ibatis.session.Configuration configuration) {
+				configuration.setObjectWrapperFactory(new MybatisMapWrapperFactory());
+			}
+		};
+	}
+
+}

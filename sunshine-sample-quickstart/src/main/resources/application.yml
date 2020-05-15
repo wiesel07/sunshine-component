@@ -1,0 +1,49 @@
+server:
+   tomcat:
+       uri-encoding: UTF-8
+       max-threads: 1000
+       min-spare-threads: 30
+       
+spring:
+    profiles:
+        active: dev
+    redis: 
+        host: 127.0.0.1
+        database: 0
+        port: 6379
+        password: 
+        timeout: 1000ms    
+       
+# Logger Config
+logging:
+  level:
+    com.baomidou.mybatisplus.samples.deluxe: debug
+    com.baomidou.mybatisplus.samples.wrapper: debug
+
+mybatis-plus:
+  # 扫描 mapper.xml
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  configuration:
+    jdbc-type-for-null: 'null'
+    map-underscore-to-camel-case: true
+    cache-enabled: true
+    call-setters-on-nulls: true
+  #实体扫描，多个package用逗号或者分号分隔
+  type-aliases-package: cn.sunshine.**.biz.entity
+  global-config:
+    db-config:
+      id-type: assign-id
+      insert-strategy: not-null
+      update-strategy: ignored
+      select-strategy: not-null
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      
+# 会话超时时间 一天
+common: 
+     session: 
+            timeout: 86400   
+vaptcha:  
+    code: 
+        enable: false            
+               

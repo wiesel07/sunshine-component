@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="cn.sunshine.component.attach.mapper.AttachFilestoreMapper">
+
+	<!-- 通用查询结果列 -->
+	<sql id="Base_Column_List">
+		ATTACH_ID,
+		CONTENT ,
+		CREATE_BY,CREATE_TIME ,UPDATE_TIME
+	</sql>
+
+	<insert id="saveFiles">
+		INSERT INTO ATTACH_FILESTORE
+		(ATTACH_ID, CONTENT)
+		VALUES (#{attachId},#{content:BLOB})
+	</insert>
+
+
+</mapper>
