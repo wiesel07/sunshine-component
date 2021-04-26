@@ -21,7 +21,7 @@
 		<mybatis.plus.boot.starter.version>3.3.1.tmp</mybatis.plus.boot.starter.version>
 		<hutool.version>5.2.3</hutool.version>
 		<hibernate-validator.version>6.0.10.Final</hibernate-validator.version>
-		<commons-io.version>2.6</commons-io.version>
+		<commons-io.version>2.7</commons-io.version>
 		<knife4j.version>1.9.6</knife4j.version>
 	</properties>
 	<dependencyManagement>
